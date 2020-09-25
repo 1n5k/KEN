@@ -1,2 +1,51 @@
 ---
-# tasks file for docker-compose
+- hosts: docker-compose
+  become: yes
+  tasks:
+    - name: install packages
+      apt:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - software-properties-common
+
+    - name: apt key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: apt repository
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"
+        state: present
+
+    - name: install docker
+      apt:
+        name: docker-ce
+        update_cache: yes
+        state: latest
+
+    - name: install python-pip
+      apt:
+        name: python3-pip
+        state: latest
+
+    - name: upgrade pip
+      pip:
+        name: pip
+        state: latest
+
+    - name: install pip docker
+      pip:
+        name: docker
+        state: latest
+
+    - name: install docker-compose
+      pip:
+        name: docker-compose
+        state: latest
+
+...
