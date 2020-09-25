@@ -1,2 +1,9 @@
 ---
 # tasks file for nginx
+
+ - hosts: nginx
+   tasks:
+    - import_tasks: _install.yml
+      become: yes
+#    - import_tasks: _config.yml
+#      become: yes
