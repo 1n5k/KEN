@@ -1,0 +1,11 @@
+ - name: copy config for KEN
+   copy:
+     src: ../files/KEN.conf
+     dest: /etc/nginx/conf.d/KEN.conf
+     
+- name: restart nginx
+   service:
+     name: nginx
+     state: restarted
+     enabled: true
+
